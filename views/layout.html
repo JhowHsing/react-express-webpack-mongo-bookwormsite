@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name='viewport' >
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="/static/font-awesome.min.css"> -->
+	
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	    <div class="container-fluid">
+	    <div class="navbar-header">
+	        <button type="button" class="navbar-toggle" data-toggle="collapse"
+	                data-target="#nav">
+	            <span class="sr-only">切换导航</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	        </button>
+
+        	<a class="navbar-brand" href="/">小书馆欢迎您！{{name}}</a>
+            
+	    </div>
+
+	    <div class="collapse navbar-collapse" id="nav">
+	    	<div class="container">
+	    		<ul class="nav navbar-nav login">
+		           
+		            {% if !currentUser %}
+			            <li><a href="/login" class="btn btn-primary pull-right">登陆</a></li>
+			            <li><a href="/register" class="btn btn-primary pull-right">注册</a></li>
+			        {% else %}
+			        	<ul class="nav navbar-nav">
+					        <li class="dropdown">
+					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">个人中心 <span class="glyphicon glyphicon-user pull-right"></span></a>
+					          <ul class="dropdown-menu">
+					            <li><a href="#">个人主页 <span class="glyphicon glyphicon-home pull-right"></span></a></li>
+					            
+					            <li class="divider"></li>
+					            <li><a href="/logout">退出登录 <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+					          </ul>
+					        </li>
+					      </ul>
+		            	
+		            {% endif %}
+	            	
+		        </ul>
+	    	</div>
+	        
+	    </div>
+	    </div>
+	</nav>
+	{% block content %}{% endblock %}
+	
+	<div class="clearfix"></div>
+	<footer>
+		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+			<a href="https://github.com/jowang2016"><img src="/static/images/github.png"></a>
+		</nav>
+		
+	</footer>
+	<script type="text/javascript" src="/static/jquery.js"></script>
+	<script type="text/javascript" src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="/static/bundle.js"></script>
+</body>
+</html>
