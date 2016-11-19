@@ -14,5 +14,18 @@ function loginReq(req,res,next) {
 	}
 
 }
+// function checklogin(req,res,next) {
+// 	var name;
+// 	User.findById(req.session.userId)
+//       .exec(function (error, user) {
+//         if (error) {
+//           return next(error);
+//         } else if(user){
+        
+// 			return name=user.name;
+//         }        
+    
+// }
 module.exports.logOut = logOut;
 module.exports.loginReq = loginReq;
+// module.exports.checklogin = checklogin;

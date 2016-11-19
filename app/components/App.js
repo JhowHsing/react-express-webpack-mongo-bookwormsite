@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
 // import NavLink from './NavLink';
 
-function Book(props) {
-  return (
-    <div className="col-md-3">
-      <a href="">
-        <div className="thumbnail">
-            <img src="/static/images/ja.jpg" 
-             alt="book image" />
-            <div className="caption">
-                <h3>book name</h3>
-                <p>book desc</p> 
-            </div>
-         </div>
-      </a>   
-    </div>
-  )
-}
+// var bookjson=JSON.parse(bookdata);
+
 class App extends Component {
   render() {
     return (
-      <Book />
+        <div className="col-md-3">
+          <a href="">
+            <div className="thumbnail">
+                <img src="{book.bookimg}"
+                 alt="book image" />
+                <div className="caption">
+                    <h3>{book.bookname}</h3>
+                    <p>{book.bookdesc}</p> 
+                </div>
+             </div>
+          </a>   
+        </div>
+      }.bind(this))}
+      
     );
   }
 }

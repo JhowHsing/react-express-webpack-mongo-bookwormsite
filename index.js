@@ -2,6 +2,9 @@
 var path = require('path');
 var express=require('express');
 var parser=require('body-parser');
+// var fs = require('fs');
+// var Busboy = require('busboy');
+// var os = require('os');
 
 var app=express();
 
@@ -46,6 +49,12 @@ app.use(function (req,res,next) {
 	next();
 });
 
+// 处理表单及文件上传的中间件
+// app.use(require('express-formidable')({
+//   uploadDir: path.join(__dirname, '/public/img'),// 上传文件目录
+//   keepExtensions: true// 保留后缀
+// }));
+
 //router
 var router=require('./src/api/route.js');
 app.use('/',router);
@@ -59,6 +68,8 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
 
 app.listen(3000,function(){
 	console.log('server is running on 3000');
