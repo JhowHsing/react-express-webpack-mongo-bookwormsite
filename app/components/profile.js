@@ -18,7 +18,7 @@ class Profile extends Component {
 		        	
 		        </div>
 		        <div className="form-group">
-		        	<input type="text" id="bookdesc" name="bookdesc" placeholder="书籍描述" className="form-control" />
+		        	<textarea id="bookdesc" name="bookdesc" placeholder="书籍描述" rows='5' className="form-control"></textarea>
 		        </div>
 			    <div className="control-group">		      
 			      <div className="controls">
