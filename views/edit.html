@@ -1,0 +1,27 @@
+{% extends './layout.html' %}
+{% block content %}
+<div id="main">loading...</div>
+<div id="my-div">
+	<form class="form-horizontal" action='/edit/{{book._id.valueOf()}}' method="POST" enctype="multipart/form-data">
+	  <fieldset>
+	    
+	    <div class="form-group">
+        	<input type="text" id="bookname" name="bookname" placeholder="书名" class="form-control" value="{{book.bookname}}" />
+        </div>
+        <div class="form-group">
+        	
+			<input type="file" name="my_file" id="my_file" class="form-control"></input>
+        	
+        </div>
+        <div class="form-group">
+        	<textarea id="bookdesc" name="bookdesc" placeholder="书籍描述" rows='5' class="form-control">{{book.bookdesc}}</textarea>
+        </div>
+	    <div class="control-group">		      
+	      <div class="controls">
+	        <button class="btn btn-primary" type="submit">提交</button>
+	      </div>
+	    </div>
+	  </fieldset>
+	</form>  
+</div>
+{% endblock %}

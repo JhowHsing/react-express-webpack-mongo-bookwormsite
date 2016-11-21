@@ -2,6 +2,7 @@
 var path = require('path');
 var express=require('express');
 var parser=require('body-parser');
+var flash = require('connect-flash');
 // var fs = require('fs');
 // var Busboy = require('busboy');
 // var os = require('os');
@@ -14,6 +15,9 @@ app.use(parser.urlencoded({extended:false}));
 
 // serve static files from /public
 app.use('/static', express.static(__dirname+'/public'));
+
+// flash 中间价，用来显示通知
+app.use(flash());
 
 // 设置模板目录
 app.set('views', __dirname+'/views');
@@ -40,12 +44,16 @@ app.use(session({
 	secret: 'book book',
 	resave: true,
 	saveUninitialized: false,
+
 	store: new mongostore({
 		mongooseConnection: db
 	})
 }));
 app.use(function (req,res,next) {
 	res.locals.currentUser=req.session.userId;
+	//flash
+	res.locals.success = req.flash('success').toString();
+  	res.locals.error = req.flash('error').toString();
 	next();
 });
 
@@ -64,8 +72,7 @@ app.use('/',router);
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
-    message: err.message,
-    error: {}
+    error: err
   });
 });
 

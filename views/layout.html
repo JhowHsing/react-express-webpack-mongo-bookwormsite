@@ -53,6 +53,13 @@
 	    </div>
 	    </div>
 	</nav>
+	<div id="notify">
+		{% if success %}
+			<p>{{success}}</p>
+		{% elseif error %}
+			<p>{{error}}</p>
+		{% endif %}
+	</div>
 	{% block content %}{% endblock %}
 	
 	<div class="clearfix"></div>
