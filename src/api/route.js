@@ -84,8 +84,8 @@ router.post('/profile',function(req,res,next){
 
 
 router.get('/', function(req,res,next){
-
-	User.findById(req.session.userId)
+  
+	User.findById(req.user?req.user._id:req.session.userId)
       .exec(function (error, user) {
         if (error) {
           return next(error);
