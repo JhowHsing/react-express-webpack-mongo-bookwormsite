@@ -156,9 +156,8 @@ router.post('/edit/:bid', mid.checkLogin,function (req,res,next) {
     // form.uploadDir = '/static/img/';
     form1.keepExtensions = true;  //保留后缀
     form1.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
-    console.log('1')
+    
     form1.parse(req, function(err, fields, files) {
-console.log('2')
         if (err) {
           res.locals.error = err;
           res.render('index', { title: TITLE });
@@ -191,7 +190,7 @@ console.log('2')
         var conditions = {bookname : req.book.bookname};
         var update = {$set : {bookname : fields.bookname, bookimg: avatarName? avatarName : req.book.bookimg, bookdesc: fields.bookdesc}};
         var options    = {new : true};
-        console.log('here')
+        
         Book.findOneAndUpdate(conditions, update, options, function(error){
             if(error) {
                 return next(error);
