@@ -17,7 +17,7 @@ module.exports = {
 
 	// },
 	checkLogin: function checkLogin(req, res, next) {
-	    if (!req.session.userId) {
+	    if (!req.session.userId && !JSON.stringify(req.user)) {
 	      req.flash('error', '未登录'); 
 	      
 	      return res.redirect('/');

@@ -51,16 +51,12 @@ router.post('/profile',function(req,res,next){
         }
 
         if(extName.length == 0){
-            res.locals.error = '只支持png和jpg格式图片';
-            res.render('index', { title: TITLE });
-            return;          
+          var avatarName = "0.16964576106560836.jpg";      
+        }else{
+          var avatarName = Math.random() + '.' + extName;
+          var newPath = form1.uploadDir + avatarName; 
+          fs.renameSync(files.my_file.path, newPath); 
         }
-
-        var avatarName = Math.random() + '.' + extName;
-        var newPath = form.uploadDir + avatarName;
-
-        console.log(newPath);
-        fs.renameSync(files.my_file.path, newPath); 
 
         var bookData={
           bookname: fields.bookname,
@@ -152,69 +148,65 @@ router.get('/delete/:bid', mid.checkLogin, function (req,res,next) {
 router.get('/edit/:bid', mid.checkLogin,function (req,res,next) {
   return res.render('edit',{book:req.book})
 })
-// router.post('/edit/:bid', mid.checkLogin,function (req,res,next) {
+router.post('/edit/:bid', mid.checkLogin,function (req,res,next) {
 
-//   var form = new formidable.IncomingForm();   //创建上传表单
-//     form.encoding = 'utf-8';    //设置编辑
-//     form.uploadDir = __dirname+'/public/img/';  //设置上传目录
-//     // form.uploadDir = '/static/img/';
-//     form.keepExtensions = true;  //保留后缀
-//     form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+  var form1 = new formidable.IncomingForm();   //创建上传表单
+    form1.encoding = 'utf-8';    //设置编辑
+    form1.uploadDir = __dirname+'/public/img/';  //设置上传目录
+    // form.uploadDir = '/static/img/';
+    form1.keepExtensions = true;  //保留后缀
+    form1.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+    console.log('1')
+    form1.parse(req, function(err, fields, files) {
+console.log('2')
+        if (err) {
+          res.locals.error = err;
+          res.render('index', { title: TITLE });
+          return;   
+        }  
+        var extName = '';  //后缀名
+        switch (files.my_file.type) {
+          case 'image/pjpeg':
+            extName = 'jpg';
+            break;
+          case 'image/jpeg':
+            extName = 'jpg';
+            break;     
+          case 'image/png':
+            extName = 'png';
+            break;
+          case 'image/x-png':
+            extName = 'png';
+            break;     
+        }
 
-//     form.parse(req, function(err, fields, files) {
+        if(extName.length == 0){
+          var avatarName = "";      
+        }else{
+          var avatarName = Math.random() + '.' + extName;
+          var newPath = form1.uploadDir + avatarName; 
+          fs.renameSync(files.my_file.path, newPath); 
+        }
 
-//         if (err) {
-//           res.locals.error = err;
-//           res.render('index', { title: TITLE });
-//           return;   
-//         }  
-//         var extName = '';  //后缀名
-//         switch (files.my_file.type) {
-//           case 'image/pjpeg':
-//             extName = 'jpg';
-//             break;
-//           case 'image/jpeg':
-//             extName = 'jpg';
-//             break;     
-//           case 'image/png':
-//             extName = 'png';
-//             break;
-//           case 'image/x-png':
-//             extName = 'png';
-//             break;     
-//         }
+        var conditions = {bookname : req.book.bookname};
+        var update = {$set : {bookname : fields.bookname, bookimg: avatarName? avatarName : req.book.bookimg, bookdesc: fields.bookdesc}};
+        var options    = {new : true};
+        console.log('here')
+        Book.findOneAndUpdate(conditions, update, options, function(error){
+            if(error) {
+                return next(error);
+            } else {
+                // console.log('update ok!');
+            }
+            //关闭数据库链接
+            // db.close();
+        });
 
-//         if(extName.length == 0){
-//             res.locals.error = '只支持png和jpg格式图片';
-//             res.render('index', { title: TITLE });
-//             return;          
-//         }
-
-//         var avatarName = Math.random() + '.' + extName;
-//         var newPath = form.uploadDir + avatarName;
-
-//         console.log(newPath);
-//         fs.renameSync(files.my_file.path, newPath); 
-
-//         // var bookData={
-//         //   bookname: fields.bookname,
-//         //   bookimg: avatarName,
-//         //   bookdesc: fields.bookdesc
-//         // }
-//         // req.book.update(bookData,function(error,book){
-//         //   if(error){
-//         //     return next(error)
-//         //   }else{
-//         //     // 这里如果res 会报错
-//         //     // return res.redirect('/');
-//         //   }
-//         // })
-
-//     });
-//     res.locals.success = '更新成功';
+    });
+    res.locals.success = '更新成功';
     
-//     // res.render('index', { title: TITLE }); 
-// })
+    res.redirect("/"); 
+})
 router.get('/register', function(req,res,next){
 	res.render('register')
 });
